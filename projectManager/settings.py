@@ -81,12 +81,21 @@ WSGI_APPLICATION = 'projectManager.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    #     'OPTIONS': {
+    #         'version': '3.8.11.1', 
+    #     }
+    # }
+
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        'OPTIONS': {
-            'version': '3.8.11.1', 
-        }
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'devdb',
+        'USER': 'root',
+        'PASSWORD': 'Deadpool@s1q777',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
