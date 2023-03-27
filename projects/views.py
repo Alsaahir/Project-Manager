@@ -3,11 +3,17 @@ from .models import Project
 from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm
 from .utils import searchProjects
-
+from django.core.paginator import Paginator
 
 
 def projects(request):
     projects, search_query = searchProjects(request)
+
+    page = 2
+    results = 3
+    paginator = Paginator(projects, results)
+
+    projects = paginator.page(page)
     
     context = {
         'projects': projects,
