@@ -14,7 +14,7 @@
             <p>Hello Developer, Welcome Back!</p>
           </div>
   
-          <form action="{% url 'login' %}" method="POST" class="form auth__form">
+          <form action="" method="POST" class="form auth__form">
             {% csrf_token %}
             <!-- Input: Username -->
             <div class="form__field">
@@ -41,7 +41,7 @@
             </div>
             <div class="auth__actions">
               <input class="btn btn--sub btn--lg" type="submit" value="Log In" />
-              <a href="forgetpassword.html">Forget Password?</a>
+              <a href="{% url 'reset_password' %}">Forgot Password?</a>
             </div>
           </form>
           <div class="auth__alternative">
@@ -70,10 +70,11 @@
                   <div class="form__field">
                     <label for="formInput#text">{{ field.label }}</label>
                     {{ field }}
-{% comment %} 
+                  {% comment %} 
                     {% if field.help_text %}
                       <small>{{ field.help_text }}</small>
-                    {% endif %} {% endcomment %}
+                    {% endif %}
+                    {% endcomment %}
 
                     {% for error in field.errors %}
                       <p style="color: red;">{{ error }}</p>

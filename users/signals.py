@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from .models import Profile
 # from django.dispatch import receiver
 from django.db.models.signals import post_save, post_delete
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 def createProfile(sender, instance, created, **kwargs):
@@ -12,6 +14,17 @@ def createProfile(sender, instance, created, **kwargs):
             username=user.username,
             email=user.email,
             name=user.first_name,
+        )
+
+        subject = 'Welcome to Dev Hub'
+        message = 'Your profile has been created successfully!\n\n We are glad you have joined the biggest developers\' online Community!\n Please feel free interact with others developers on the platform.\n '
+
+        send_mail(
+            subject,
+            message,
+            settings.EMAIL_HOST_USER,
+            [profile.email],
+            fail_silently=False,
         )
 
 
@@ -33,3 +46,4 @@ def deleteUser(sender, instance, **kwargs):
 post_save.connect(createProfile, sender=User)
 post_save.connect(updateUser, sender=Profile)
 post_delete.connect(deleteUser, sender=Profile)
+
