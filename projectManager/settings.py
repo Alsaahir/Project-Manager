@@ -215,6 +215,8 @@ MEDIA_URL = ''
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+DISABLE_COLLECTSTATIC = 1
+
 
 
 if os.getcwd() == '/app':
