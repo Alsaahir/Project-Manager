@@ -1,11 +1,12 @@
 {% extends 'main.html' %}
+{% load static %}
 {% block content %}
 
     <!-- Main Section -->
     <main class="formPage my-xl">
         <div class="content-box">
             <div class="formWrapper">
-                <a class="backButton" href="#"><i class="im im-angle-left"></i></a>
+                <a class="backButton" href="{% url 'account' %}"><i class="im im-angle-left"></i></a>
                 <br>
 
                 <form class="form" action="" method="POST" enctype="multipart/form-data">
@@ -19,6 +20,18 @@
                                 placeholder="Enter text" /> {% endcomment %}
                         </div>
                     {% endfor %}
+
+                    <div class="form__field">
+                        {% for tag in project.tags.all %}
+                            <div class="project-tag tag tag--pill tag--main" data-tag="{{ tag.id }}" data-project="{{ project.id }}">{{ tag.name }} &#215;</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form__field">
+                        <label for="formInput#text"><h4>Tags</h4></label>
+                        <p>Add your tags here</p>
+                        <textarea name="newtags" class="input" placeholder="eg. Python, django, react etc..........."></textarea>
+                    </div>
 
                     <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
                 </form>

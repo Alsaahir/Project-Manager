@@ -1,6 +1,9 @@
+from datetime import datetime, timedelta
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
+
+from users.templatetags.mytags import is_user_online
 from .models import Profile, Message
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -11,10 +14,17 @@ from .utils import searchProfiles, paginateProfiles
 def profiles(request):
     profiles, search_query = searchProfiles(request)
     custom_range, profiles = paginateProfiles(request, profiles, 6)
+    user = request.user
+
+    is_active = request.user.is_authenticated
+    if is_user_online(user):
+        print('Online')
+
     context = {
         'profiles': profiles,
         'search_query': search_query,
         'custom_range': custom_range,
+        'is_active': is_active,
     }
     return render(request, 'users/profiles.html', context)
 
@@ -43,7 +53,7 @@ def loginUser(request):
             user = User.objects.get(username=username)
         except:
             messages.error(request, 'Username does not exist!')
-        
+
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
@@ -91,7 +101,7 @@ def registerUser(request):
 @login_required(login_url='login')
 def userAccount(request):
     profile = request.user.profile
-    
+
     skills = profile.skill_set.all()
     projects = profile.project_set.all()
 
@@ -203,7 +213,7 @@ def createMessage(request, pk):
         sender = request.user.profile
     except:
         sender = None
-    
+
     if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():

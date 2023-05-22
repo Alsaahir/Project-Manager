@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+{% load mytags %}
 {% block content %}
     
   <!-- Main Section -->
@@ -32,10 +33,20 @@
                     <div class="dev">
                     <a href="{% url 'user-profile' profile.id %}" class="card__body">
                         <div class="dev__profile">
-                            <img class="avatar avatar--md" src="{{ profile.profile_image.url }}" alt="image" />
+                            <img class="avatar avatar--md" src="{{ profile.imageURL }}" alt="image" />
                         <div class="dev__meta">
                             <h3>{{ profile.name }}</h3>
                             <h5>{{ profile.short_intro|slice:"80" }}</h5>
+
+                                  {% if profile.user|is_user_online %}
+                                    <span class="status">On</span>
+                                  {% endif %}
+                                
+                              {% comment %} {% if profile.user.is_authenticated %}
+                                <span class="status">On</span>
+                              {% endif %} {% endcomment %}
+                            
+
                         </div>
                         </div>
                         <p class="dev__info">{{ profile.bio|slice:"150"}}</p>

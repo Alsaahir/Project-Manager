@@ -2,6 +2,8 @@ from .models import Profile, Skill
 from django.db.models import Q
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
+from datetime import datetime, timedelta
+
 
 def searchProfiles(request):
     search_query = ''
@@ -44,3 +46,19 @@ def paginateProfiles(request, profiles, results):
     custom_range = range(leftIndex, rightIndex)
 
     return custom_range, profiles
+
+
+
+class UpdateLastActivityMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        # Update user's last activity time if user is authenticated
+        if request.user.is_authenticated:
+            request.user.profile.last_activity = datetime.now()
+            request.user.save()
+
+        response = self.get_response(request)
+
+        return response
