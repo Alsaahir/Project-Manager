@@ -845,3 +845,24 @@ img {
   margin-bottom: 1rem;
   margin-top: 2rem;
 }
+
+/*========================
+ ONLINE STATUS INDICATOR 
+=========================*/
+.status {
+  background-color: #fff;
+  border-radius: 50%;
+  width: 50px;
+  height: 20px;
+  color: #fff;
+}
+
+.status.online {
+  background-color: #41a700;
+  color: #41a700;
+}
+
+.status.offline {
+  background-color: red;
+  color: red;
+}
